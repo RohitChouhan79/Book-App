@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const fs=require("fs")
+const fs=require("fs") // required fs as a filesystem
 const countryList = require('country-list');  //we have taken country list from npm country-list and called him in a variable
 countryNames=countryList.getNames() //Call countrynames from installled country package
 const languages_list = [
@@ -158,18 +158,22 @@ function Books(){
   return JSON.parse(fs.readFileSync("public/book.json","utf-8")) //JSON.parse will read data as object
 }//created a function Books for read the object data when we need
 
+//  created a Writebooks() function for update the data come from book varible
 function WriteBooks(book){
   fs.writeFileSync("public/book.json",JSON.stringify(book)) //json.stringfy convert data from json to stingno
 }
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+//  register router  then register page will call
 router.get('/Register', function(req, res, next) {
-  
   res.render('registerd',{countryNames:countryNames,languageName:languages_list,});
 });
 
+// register post routes from that data will be come from registerd page
 router.post('/Register', function(req, res, next) {
   const x=Books();
   x.push(req.body);
@@ -177,6 +181,7 @@ router.post('/Register', function(req, res, next) {
   res.redirect("/show")
 });
 
+// show routes show the book
 router.get('/show', function(req, res, next) {
   res.render('show',{book:Books()});
 });
