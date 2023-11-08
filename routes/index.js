@@ -194,11 +194,14 @@ router.get("/delete/:index", function (req, res, next) {
   res.redirect("/show");
 });
 
+// from update id will will update 
 router.get("/update/:index", function (req, res, next) {
   let booke= Books();
   let book=booke[req.params.index]
   res.render('update',{countryNames:countryNames,languageName:languages_list,book,index:req.params.index,});
 });
+
+// update post routes helpss to update book author data upadation
 router.post("/update/:index", function (req, res, next) {
   let x = Books();
   x[req.params.index] = req.body
@@ -206,9 +209,9 @@ router.post("/update/:index", function (req, res, next) {
   res.redirect("/show");
 });
 
-
+// About page will run
 router.get('/About', function(req, res, next) {
-  res.render('about', { title: 'Express' });
+  res.render('about');
 });
 
 module.exports = router;
